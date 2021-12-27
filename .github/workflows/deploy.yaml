@@ -41,7 +41,7 @@ jobs:
 
     - name: Mark deployment in_progress
       uses: actions/github-script@v5
-      with: ${{ github.event.inputs.access_token }}
+      with:
         github-token: ${{ github.event.inputs.access_token }}
         script: |
           if (context.payload.inputs['deployment-id'] != null){
