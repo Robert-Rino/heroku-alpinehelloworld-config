@@ -1,6 +1,8 @@
 name: deploy-app
 on:
   push:
+    branches:
+      - master
   workflow_dispatch:
     inputs:
       image-name:
