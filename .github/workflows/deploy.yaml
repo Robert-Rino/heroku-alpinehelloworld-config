@@ -16,6 +16,9 @@ on:
       deployment-id:
         required: false
         default: null
+      access_token:
+        required: false
+        default: null
     secrets:
       token:
         required: true
@@ -36,25 +39,32 @@ jobs:
       run:
         working-directory: ./kustomization
 
-    steps:
-    # - name: Mark deployment in_progress
-    #   uses: actions/github-script@v5
-    #   with:
-    #     script: |
-    #       if (context.payload.inputs['deployment-id'] != null){
-    #         let [owner, repo] = context.payload.repository.full_name.split('/')
-    #         let parts = repo.split('-')
-    #         let original_repo = parts.slice(0, -1).join('-')
-    #         console.log(owner, repo, original_repo)
+    # steps:
+    # - name: Setup
+    #   id: config
+    #   run: |
+    #     echo context
+        
 
-    #         github.rest.repos.createDeploymentStatus({
-    #           owner: owner,
-    #           repo: original_repo,
-    #           deployment_id: context.payload.inputs['deployment-id'],
-    #           state: 'in_progress',
-    #         })
+    - name: Mark deployment in_progress
+      uses: actions/github-script@v5
+      with:
+        github-token: ${{ context.payload.inputs.access_token }}
+        script: |
+          if (context.payload.inputs['deployment-id'] != null){
+            let [owner, repo] = context.payload.repository.full_name.split('/')
+            let parts = repo.split('-')
+            let original_repo = parts.slice(0, -1).join('-')
+            console.log(owner, repo, original_repo)
 
-    #       }
+            github.rest.repos.createDeploymentStatus({
+              owner: owner,
+              repo: original_repo,
+              deployment_id: context.payload.inputs['deployment-id'],
+              state: 'in_progress',
+            })
+
+          }
 
     - name: Checkout
       uses: actions/checkout@v2
@@ -107,6 +117,7 @@ jobs:
     - name: Mark deployment success
       uses: actions/github-script@v5
       with:
+        github-token: ${{ context.payload.inputs.access_token }}
         script: |
           if (context.payload.inputs['deployment-id'] != null){
             let [owner, repo] = context.payload.repository.full_name.split('/')
