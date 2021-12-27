@@ -23,7 +23,7 @@ jobs:
       run: |
         TARGET_SHA=$(cat k8s-template/001_deployment.yaml | grep -oP 'heroku-alpinehelloworld:\K(sha-[0-9a-z]+)')
         echo $TARGET_SHA
-        echo "TARGET_SHA=$NPROC" >> $GITHUB_ENV
+        echo "TARGET_SHA=$TARGET_SHA" >> $GITHUB_ENV
 
     - name: Config
       uses: actions/github-script@v5
