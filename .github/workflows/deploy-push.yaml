@@ -18,15 +18,16 @@ jobs:
     steps:
     - name: Config
       uses: actions/github-script@v5
-      script: |
-        let owner = context.repo['owner']
-        let repo = context.repo['repo']
-        
-        let parts = repo.split('-')
-        const target_repo = parts.slice(0, -1).join('-')
-        
-        process.env['TARGET_REPO'] = target_repo
-        process.env['OWNER'] = owner
+      with:
+        script: |
+          let owner = context.repo['owner']
+          let repo = context.repo['repo']
+          
+          let parts = repo.split('-')
+          const target_repo = parts.slice(0, -1).join('-')
+          
+          process.env['TARGET_REPO'] = target_repo
+          process.env['OWNER'] = owner
 
 
     - name: Create deployment
