@@ -34,7 +34,7 @@ jobs:
       id: create_deployment
       uses: actions/github-script@v5
       with:
-        github-token: ${{ secret.GH_PERSONAL_TOKEN }}
+        github-token: ${{ secrets.GH_PERSONAL_TOKEN }}
         script: |
           const deployment = await github.rest.repos.createDeployment({
               owner: $OWNER,
@@ -49,7 +49,7 @@ jobs:
     - name: Mark deployment in_progress
       uses: actions/github-script@v5
       with:
-        github-token: ${{ secret.GH_PERSONAL_TOKEN }}
+        github-token: ${{ secrets.GH_PERSONAL_TOKEN }}
         script: |
           github.rest.repos.createDeploymentStatus({
               owner: $OWNER,
@@ -87,7 +87,7 @@ jobs:
     - name: Mark deployment success
       uses: actions/github-script@v5
       with:
-        github-token: ${{ secret.GH_PERSONAL_TOKEN }}
+        github-token: ${{ secrets.GH_PERSONAL_TOKEN }}
         script: |
           github.rest.repos.createDeploymentStatus({
               owner: $OWNER,
