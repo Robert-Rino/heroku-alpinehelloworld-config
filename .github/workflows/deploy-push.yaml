@@ -44,12 +44,12 @@ jobs:
       with:
         github-token: ${{ secrets.GH_PERSONAL_TOKEN }}
         script: |
-          const { OWNER, TARGET_REPO } = process.env
+          const { OWNER, TARGET_REPO, TARGET_SHA } = process.env
 
           const deployment = await github.rest.repos.createDeployment({
               owner: OWNER,
               repo: TARGET_REPO,
-              ref: ${TARGET_SHA},
+              ref: TARGET_SHA,
             })
 
           core.exportVariable('DEPLOYMENT_ID', deployment['id']);
