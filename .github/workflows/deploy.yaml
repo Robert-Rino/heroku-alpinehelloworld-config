@@ -40,15 +40,10 @@ jobs:
         working-directory: ./kustomization
 
     steps:
-    - name: Debug
-      id: debug
-      run: |
-        echo "${{ github.event.inputs }}"
-        
     - name: Mark deployment in_progress
       uses: actions/github-script@v5
       with:
-        github-token: ${{ github.events.inputs.access_token }}
+        github-token: ${{ github.event.inputs.access_token }}
         script: |
           if (context.payload.inputs['deployment-id'] != null){
             let [owner, repo] = context.payload.repository.full_name.split('/')
@@ -116,7 +111,7 @@ jobs:
     - name: Mark deployment success
       uses: actions/github-script@v5
       with:
-        github-token: ${{ github.events.inputs.access_token }}
+        github-token: ${{ github.event.inputs.access_token }}
         script: |
           if (context.payload.inputs['deployment-id'] != null){
             let [owner, repo] = context.payload.repository.full_name.split('/')
