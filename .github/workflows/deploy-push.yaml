@@ -36,9 +36,11 @@ jobs:
       with:
         github-token: ${{ secrets.GH_PERSONAL_TOKEN }}
         script: |
+          const { OWNER, TARGET_REPO } = process.env
+
           const deployment = await github.rest.repos.createDeployment({
-              owner: `${OWNER}`,
-              repo: `${TARGET_REPO}`,
+              owner: OWNER,
+              repo: TARGET_REPO,
               ref: context.sha,
             })
 
@@ -50,10 +52,11 @@ jobs:
       with:
         github-token: ${{ secrets.GH_PERSONAL_TOKEN }}
         script: |
+          const { OWNER, TARGET_REPO, DEPLOYMENT_ID} = process.env
           github.rest.repos.createDeploymentStatus({
-              owner: ${OWNER},
-              repo: ${TARGET_REPO},
-              deployment_id: ${DEPLOYMENT_ID},
+              owner: OWNER,
+              repo: TARGET_REPO,
+              deployment_id: DEPLOYMENT_ID,
               state: 'in_progress',
             })
 
@@ -88,9 +91,10 @@ jobs:
       with:
         github-token: ${{ secrets.GH_PERSONAL_TOKEN }}
         script: |
+          const { OWNER, TARGET_REPO, DEPLOYMENT_ID} = process.env
           github.rest.repos.createDeploymentStatus({
-              owner: ${OWNER},
-              repo: ${TARGET_REPO},
-              deployment_id: ${DEPLOYMENT_ID},
+              owner: OWNER,
+              repo: TARGET_REPO,
+              deployment_id: DEPLOYMENT_ID,
               state: 'success',
             })
