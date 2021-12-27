@@ -51,6 +51,7 @@ jobs:
               owner: OWNER,
               repo: TARGET_REPO,
               ref: TARGET_SHA,
+              auto_merge: false,
             })
 
           console.log(deployment)
