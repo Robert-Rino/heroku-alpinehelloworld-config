@@ -37,8 +37,8 @@ jobs:
         github-token: ${{ secrets.GH_PERSONAL_TOKEN }}
         script: |
           const deployment = await github.rest.repos.createDeployment({
-              owner: $OWNER,
-              repo: $TARGET_REPO,
+              owner: ${OWNER},
+              repo: ${TARGET_REPO},
               ref: context.sha
             })
 
@@ -52,9 +52,9 @@ jobs:
         github-token: ${{ secrets.GH_PERSONAL_TOKEN }}
         script: |
           github.rest.repos.createDeploymentStatus({
-              owner: $OWNER,
-              repo: $TARGET_REPO,
-              deployment_id: $DEPLOYMENT_ID,
+              owner: ${OWNER},
+              repo: ${TARGET_REPO},
+              deployment_id: ${DEPLOYMENT_ID},
               state: 'in_progress',
             })
 
@@ -90,8 +90,8 @@ jobs:
         github-token: ${{ secrets.GH_PERSONAL_TOKEN }}
         script: |
           github.rest.repos.createDeploymentStatus({
-              owner: $OWNER,
-              repo: $TARGET_REPO,
-              deployment_id: $DEPLOYMENT_ID,
+              owner: ${OWNER},
+              repo: ${TARGET_REPO},
+              deployment_id: ${DEPLOYMENT_ID},
               state: 'success',
             })
