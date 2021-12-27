@@ -50,7 +50,7 @@ jobs:
             let original_repo = parts.slice(0, -1).join('-')
             console.log(owner, repo, original_repo)
 
-            github.rest.repos.createDeploymentStatus({
+            await github.rest.repos.createDeploymentStatus({
               owner: owner,
               repo: original_repo,
               deployment_id: context.payload.inputs['deployment-id'],
@@ -118,7 +118,7 @@ jobs:
             let original_repo = parts.slice(0, -1).join('-')
             console.log(owner, repo, original_repo)
 
-            github.rest.repos.createDeploymentStatus({
+            await github.rest.repos.createDeploymentStatus({
               owner: owner,
               repo: original_repo,
               deployment_id: context.payload.inputs['deployment-id'],
