@@ -30,7 +30,7 @@ spec:
             configMapKeyRef:
               key: version
               name: k8s-helloworld-configmap
-        image: ghcr.io/robert-rino/heroku-alpinehelloworld:sha-9597b6e
+        image: ghcr.io/robert-rino/heroku-alpinehelloworld:sha-4abc6df
         name: server
         ports:
         - containerPort: 8080
