@@ -38,7 +38,6 @@ jobs:
         working-directory: ./kustomization
 
     steps:
-
     - name: Mark deployment in_progress
       uses: actions/github-script@v5
       with:
@@ -50,7 +49,7 @@ jobs:
             let original_repo = parts.slice(0, -1).join('-')
             console.log(owner, repo, original_repo)
 
-            await github.rest.repos.createDeploymentStatus({
+            github.rest.repos.createDeploymentStatus({
               owner: owner,
               repo: original_repo,
               deployment_id: context.payload.inputs['deployment-id'],
@@ -118,7 +117,7 @@ jobs:
             let original_repo = parts.slice(0, -1).join('-')
             console.log(owner, repo, original_repo)
 
-            await github.rest.repos.createDeploymentStatus({
+            github.rest.repos.createDeploymentStatus({
               owner: owner,
               repo: original_repo,
               deployment_id: context.payload.inputs['deployment-id'],
