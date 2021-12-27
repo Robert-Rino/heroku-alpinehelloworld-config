@@ -26,8 +26,8 @@ jobs:
           let parts = repo.split('-')
           const target_repo = parts.slice(0, -1).join('-')
           
-          process.env['TARGET_REPO'] = target_repo
-          process.env['OWNER'] = owner
+          core.exportVariable('TARGET_REPO', target_repo);
+          core.exportVariable('OWNER', owner);
 
 
     - name: Create deployment
@@ -43,7 +43,7 @@ jobs:
             })
 
           console.log(`${deployment}`)
-          process.enc['DEPLOYMENT_ID'] = deployment['id']
+          core.exportVariable('DEPLOYMENT_ID', deployment['id']);
 
 
     - name: Mark deployment in_progress
