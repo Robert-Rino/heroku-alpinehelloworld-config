@@ -53,6 +53,7 @@ jobs:
               ref: TARGET_SHA,
             })
 
+          console.log(deployment)
           core.exportVariable('DEPLOYMENT_ID', deployment['id']);
 
 
