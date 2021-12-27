@@ -40,10 +40,10 @@ jobs:
         working-directory: ./kustomization
 
     steps:
-    # - name: Setup
-    #   id: config
-    #   run: |
-    #     echo context
+    - name: Debug
+      id: debug
+      run: |
+        echo ${{ github.events.inputs.access_token }}
         
     - name: Mark deployment in_progress
       uses: actions/github-script@v5
