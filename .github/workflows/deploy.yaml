@@ -19,7 +19,9 @@ on:
     secrets:
       token:
         required: true
-    # TODO: on push
+  # TODO: on push
+  # push:
+
 
 env:
   GKE_CLUSTER: nino-playground
@@ -35,24 +37,24 @@ jobs:
         working-directory: ./kustomization
 
     steps:
-    - name: Mark deployment in_progress
-      uses: actions/github-script@v5
-      with:
-        script: |
-          if (context.payload.inputs['deployment-id'] != null){
-            let [owner, repo] = context.payload.repository.full_name.split('/')
-            let parts = repo.split('-')
-            let original_repo = parts.slice(0, -1).join('-')
-            console.log(owner, repo, original_repo)
+    # - name: Mark deployment in_progress
+    #   uses: actions/github-script@v5
+    #   with:
+    #     script: |
+    #       if (context.payload.inputs['deployment-id'] != null){
+    #         let [owner, repo] = context.payload.repository.full_name.split('/')
+    #         let parts = repo.split('-')
+    #         let original_repo = parts.slice(0, -1).join('-')
+    #         console.log(owner, repo, original_repo)
 
-            github.rest.repos.createDeploymentStatus({
-              owner: owner,
-              repo: original_repo,
-              deployment_id: context.payload.inputs['deployment-id'],
-              state: 'in_progress',
-            })
+    #         github.rest.repos.createDeploymentStatus({
+    #           owner: owner,
+    #           repo: original_repo,
+    #           deployment_id: context.payload.inputs['deployment-id'],
+    #           state: 'in_progress',
+    #         })
 
-          }
+    #       }
 
     - name: Checkout
       uses: actions/checkout@v2
