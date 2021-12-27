@@ -39,10 +39,9 @@ jobs:
           const deployment = await github.rest.repos.createDeployment({
               owner: ${OWNER},
               repo: ${TARGET_REPO},
-              ref: context.sha
+              ref: context.sha,
             })
 
-          console.log(`${deployment}`)
           core.exportVariable('DEPLOYMENT_ID', deployment['id']);
 
 
