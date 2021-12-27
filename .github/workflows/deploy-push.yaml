@@ -54,7 +54,7 @@ jobs:
             })
 
           console.log(deployment)
-          core.exportVariable('DEPLOYMENT_ID', (deployment['id']).toString());
+          core.exportVariable('DEPLOYMENT_ID', deployment.data.id);
 
 
     - name: Mark deployment in_progress
