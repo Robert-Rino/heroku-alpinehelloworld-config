@@ -43,7 +43,7 @@ jobs:
     - name: Debug
       id: debug
       run: |
-        echo ${{ github.events.inputs.access_token }}
+        echo "${{ github.events.inputs.access_token }}"
         
     - name: Mark deployment in_progress
       uses: actions/github-script@v5
