@@ -7,7 +7,7 @@ env:
   GKE_ZONE: asia-east1-a	   
 
 jobs:
-  deploy:
+  deploy-push:
     name: deploy
     runs-on: ubuntu-latest
     environment: production
