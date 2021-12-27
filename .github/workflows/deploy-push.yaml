@@ -21,7 +21,7 @@ jobs:
 
     - name: Parse deploy sha
       run: |
-        TARGET_SHA=$(cat k8s-template/001_deployment.yaml | grep -oP 'heroku-alpinehelloworld:\K(sha-[0-9a-z]+)')
+        TARGET_SHA=$(cat k8s-template/001_deployment.yaml | grep -oP 'heroku-alpinehelloworld:sha-\K([0-9a-z]+)')
         echo $TARGET_SHA
         echo "TARGET_SHA=$TARGET_SHA" >> $GITHUB_ENV
 
