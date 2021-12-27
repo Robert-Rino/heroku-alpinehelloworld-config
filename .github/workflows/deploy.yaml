@@ -1,5 +1,6 @@
 name: deploy-app
 on:
+  push:
   workflow_dispatch:
     inputs:
       image-name:
@@ -22,8 +23,6 @@ on:
     secrets:
       token:
         required: true
-  # TODO: on push
-  # push:
 
 
 env:
@@ -40,9 +39,11 @@ jobs:
         working-directory: ./kustomization
 
     steps:
+
     - name: Mark deployment in_progress
       uses: actions/github-script@v5
-      with:
+      if: ${{ github.event.inputs.deployment-id }}
+      with: ${{ github.event.inputs.access_token }}
         github-token: ${{ github.event.inputs.access_token }}
         script: |
           if (context.payload.inputs['deployment-id'] != null){
@@ -83,6 +84,7 @@ jobs:
 
     # Set up kustomize
     - name: Set up Kustomize
+      if: ${{ github.event.inputs.deployment-id }}
       run: |-
         curl -Lo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v4.4.1/kustomize_4.4.1_linux_amd64
         chmod u+x ./kustomize
@@ -90,12 +92,14 @@ jobs:
         echo $PATH
 
     - name: Generate deployment.yaml
+      if: ${{ github.event.inputs.deployment-id }}
       run: |-
         kustomize edit set image IMAGE:TAG=${{ github.event.inputs.image-name}}:${{ github.event.inputs.image-tag}}
         kustomize edit add configmap k8s-helloworld-configmap --from-literal=version=${{github.event.inputs.image-tag}} --disableNameSuffixHash
         kustomize build . -o ../k8s-template/001_deployment.yaml
 
     - name: Commit report
+      if: ${{ github.event.inputs.deployment-id }}
       run: |
         git config --global user.name 'Rino' 
         git config --global user.email 'a901002666@gmail.com'
@@ -110,6 +114,7 @@ jobs:
 
     - name: Mark deployment success
       uses: actions/github-script@v5
+      if: ${{ github.event.inputs.deployment-id }}
       with:
         github-token: ${{ github.event.inputs.access_token }}
         script: |
