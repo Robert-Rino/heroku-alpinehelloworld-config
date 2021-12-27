@@ -11,11 +11,18 @@ jobs:
     name: deploy
     runs-on: ubuntu-latest
     environment: production
-    defaults:
-      run:
-        working-directory: ./kustomization
+    # defaults:
+    #   run:
+    #     working-directory: ./kustomization
 
     steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Parse deploy sha
+      run: |
+        cat k8s-template/001_deployment.yaml | grep -oP 'heroku-alpinehelloworld:\K(sha-[0-9a-z]+)' >> $TARGET_SHA
+
     - name: Config
       uses: actions/github-script@v5
       with:
@@ -41,7 +48,7 @@ jobs:
           const deployment = await github.rest.repos.createDeployment({
               owner: OWNER,
               repo: TARGET_REPO,
-              ref: context.sha,
+              ref: ${TARGET_SHA},
             })
 
           core.exportVariable('DEPLOYMENT_ID', deployment['id']);
@@ -59,9 +66,7 @@ jobs:
               deployment_id: DEPLOYMENT_ID,
               state: 'in_progress',
             })
-
-    - name: Checkout
-      uses: actions/checkout@v2
+    
 
     # Setup gcloud CLI
     - uses: google-github-actions/setup-gcloud@94337306dda8180d967a56932ceb4ddcf01edae7
@@ -83,7 +88,7 @@ jobs:
 
     - name: Deploy to k8s
       run: |-
-        kubectl apply -f ../k8s-template/001_deployment.yaml
+        kubectl apply -f k8s-template/001_deployment.yaml
         kubectl get services -o wide
 
     - name: Mark deployment success
