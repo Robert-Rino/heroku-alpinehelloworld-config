@@ -54,6 +54,8 @@ jobs:
               repo: original_repo,
               deployment_id: context.payload.inputs['deployment-id'],
               state: 'in_progress',
+              log_url: 'https://k8s-helloworld.nino.run/',
+              description: 'Hello this is in progress description',
             })
 
           }
@@ -122,6 +124,8 @@ jobs:
               repo: original_repo,
               deployment_id: context.payload.inputs['deployment-id'],
               state: 'success',
+              log_url: 'https://k8s-helloworld.nino.run/',
+              description: 'Hello this is in progress description',
             })
           }
           
